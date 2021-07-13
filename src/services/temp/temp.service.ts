@@ -1,39 +1,37 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { MessageService } from "./message.service";
+import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
-import { CityTemp } from "./cityTemp";
+import { Temp } from "./temp";
 
-import { environment } from "../environments/environment"
+import { environment } from "../../environments/environment";
+
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class CityTempService {
-  // private cityTempsUrl = "api/cityTemps";
-  // private cityTempsUrl = "http://localhost:8000/api/citytemps";
-  private cityTempsUrl = `${environment.apiUrl}/cityTemps`;
+export class TempService {
+  private tempsUrl = `${environment.apiUrl}/temps`;
 
-
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private messageService: MessageService
-    ) { }
+  ) { }
 
   private log(message: string) {
-    this.messageService.add(`CityTempService: ${message}`);
+    this.messageService.add(`TempService: ${message}`);
   }
 
-  getCityTemps(): Observable<CityTemp[]> {
-    return this.http
-      .get<CityTemp[]>(this.cityTempsUrl)
+  getTemps(): Observable<Temp[]> {
+    return this.http.get<Temp[]>(this.tempsUrl)
       .pipe(
-        tap(cityTemps => this.log("fetched city temps")),
-        catchError(this.handleError("getCityTemps", []))
-      );
-  }
+        tap(temps=> this.log("fetched temps")),
+        catchError(this.handleError("getTemps", []))
+      )
+  };
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -46,6 +44,5 @@ export class CityTempService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
-  }
-
+  };
 }

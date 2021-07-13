@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
-import { DataService } from "../data.service";
+import { DataService } from "../../services/data/data.service";
 
 @Component({
   selector: 'app-map',

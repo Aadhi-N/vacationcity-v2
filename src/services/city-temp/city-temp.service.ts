@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { MessageService } from "./message.service";
+import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
-import { Humidity } from "./humidity";
+import { CityTemp } from "./cityTemp";
 
-import { environment } from "../environments/environment";
-
-
+import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root'
 })
-export class HumidityService {
-  // private humidityUrl = "api/humidity";
-  // private humidityUrl = "http://localhost:8000/api/humidity";
-  private humidityUrl = `${environment.apiUrl}/humidity`;
+export class CityTempService {
+  // private cityTempsUrl = "api/cityTemps";
+  // private cityTempsUrl = "http://localhost:8000/api/citytemps";
+  private cityTempsUrl = `${environment.apiUrl}/cityTemps`;
 
-  constructor(
-    private http: HttpClient,
-    private messageService: MessageService) { }
+
+  constructor(private http: HttpClient,
+    private messageService: MessageService
+    ) { }
 
   private log(message: string) {
-    this.messageService.add(`HumidityService: ${message}`);
+    this.messageService.add(`CityTempService: ${message}`);
   }
 
-  getHumidity(): Observable<Humidity[]> {
+  getCityTemps(): Observable<CityTemp[]> {
     return this.http
-      .get<Humidity[]>(this.humidityUrl)
+      .get<CityTemp[]>(this.cityTempsUrl)
       .pipe(
-        tap(humidity => this.log("fetched humidity")),
-        catchError(this.handleError("getHumidity", []))
+        tap(cityTemps => this.log("fetched city temps")),
+        catchError(this.handleError("getCityTemps", []))
       );
   }
 
@@ -47,4 +47,5 @@ export class HumidityService {
       return of(result as T);
     };
   }
+
 }

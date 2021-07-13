@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { MessageService } from "./message.service";
+import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
 import { forkJoin } from "rxjs";
 import { City } from "./city";
-import { CityTemp } from "./cityTemp";
-import { CityCoord } from "./cityCoord";
+import { CityTemp } from "../city-temp/cityTemp";
+import { CityCoord } from "../city-coord/cityCoord";
 
-import { environment } from "../environments/environment"
+import { environment } from "../../environments/environment"
 
 
 

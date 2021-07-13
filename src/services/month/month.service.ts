@@ -1,32 +1,36 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { MessageService } from "./message.service";
+import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
+import { Month } from "./month";
 
-import { HerokuDatabase } from "./db"; 
+import { environment } from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
-export class HerokuDatabaseService {
-  private dbUrl = "/api/db";
+export class MonthService {
+  // private monthsUrl = "api/months";
+  // private monthsUrl = "https://vacationcity.herokuapp.com/api/months";
+  private monthsUrl = `${environment.apiUrl}/months`;
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService
+  ) {}
 
   private log(message: string) {
-    this.messageService.add(`HerokuDatabaseService: ${message}`);
+    this.messageService.add(`MonthService: ${message}`);
   }
 
-  getHerokuData(): Observable<HerokuDatabase[]>{
+  getMonths(): Observable<Month[]> {
     return this.http
-      .get<HerokuDatabase[]>(this.dbUrl)
+      .get<Month[]>(this.monthsUrl)
       .pipe(
-        tap(herokuData => {this.log("fetched herokuData")}),
-        catchError(this.handleError("getHerokuData", []))
+        tap(months => this.log("fetched months")),
+        catchError(this.handleError("getMonths", []))
       );
   }
 

@@ -2,38 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { MessageService } from "./message.service";
+import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
-import { Temp } from "./temp";
 
-import { environment } from "../environments/environment";
-
-
+import { HerokuDatabase } from "./db"; 
 
 @Injectable({
   providedIn: 'root'
 })
-export class TempService {
-  // private tempsUrl = "api/temps";
-  // private tempsUrl = "http://localhost:8000/api/temps";
-  private tempsUrl = `${environment.apiUrl}/temps`;
+export class DbService {
+  private dbUrl = "/api/db";
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
-  ) { }
+    private messageService: MessageService) { }
 
   private log(message: string) {
-    this.messageService.add(`TempService: ${message}`);
+    this.messageService.add(`HerokuDatabaseService: ${message}`);
   }
 
-  getTemps(): Observable<Temp[]> {
-    return this.http.get<Temp[]>(this.tempsUrl)
+  getHerokuData(): Observable<HerokuDatabase[]>{
+    return this.http
+      .get<HerokuDatabase[]>(this.dbUrl)
       .pipe(
-        tap(temps=> this.log("fetched temps")),
-        catchError(this.handleError("getTemps", []))
-      )
-  };
+        tap(herokuData => {this.log("fetched herokuData")}),
+        catchError(this.handleError("getHerokuData", []))
+      );
+  }
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -46,5 +41,5 @@ export class TempService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
-  };
+  }
 }

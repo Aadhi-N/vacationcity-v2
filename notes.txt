@@ -6,3 +6,61 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/semantic-ui/dist/semantic.min.js"
             ]
+
+
+
+              <app-input-form [formHidden]="childComponentHidden"></app-input-form>
+  <app-search-results [resultsHidden]="childComponentHidden"></app-search-results>
+
+
+
+
+
+
+<div [class.formComponent]="formHidden">
+  <div class="row" id="input-form">
+    <div class="row" id="select-month-row">
+      I want to travel in
+      <select name="Month" id="select-month" (click)="onMonthClick($event)">
+        <option value="jd" disabled>Month</option>
+        <option *ngFor="let month of months" [value]="month.monthID">{{month.monthName}}</option>
+      </select>
+      <div class="ui left pointing red basic label" [class.showError]="isMonthValue">
+        Select a month
+      </div>
+    </div>
+    <div class="row" id="select-temp">
+      <label>The temperature should be around: <span id="amount" *ngIf="selectedTemp === null; else tempBlock">0</span> °
+        <ng-template #tempBlock><span id="tempBlock">{{selectedTemp}}</span></ng-template>
+        <span [class.celcius]="!celciusActive" id="celcius" (click)="setToCelcius($event)">Celcius</span> |
+        <span [class.fahrenheit]="!fahrenheitActive" (click)="setToFahrenheit($event)">Fahrenheit</span>
+        <br />
+        <div class="slider">
+          <input type="range" id="range" [min]="tempRange.low" [max]="tempRange.high" [value]="tempRange.mid" step="2" [(ngModel)]="selectedTemp" (ngModelChange)="tempSlider($event)">
+        </div>
+
+        <!-- ERROR VALIDATION -->
+        <div class="ui pointing red basic label" [class.showError]="isTempValue" id="error-label">
+          Select a temperature
+        </div>
+      </label>
+    </div>
+    <div class="row" id="select-humidity">
+      <label>The <span id="humidity-text" data-tooltip="Humidity is the amount of water vapour in the air. The higher the relative humidity, the hotter you will feel." data-position="top center">humidity</span> should be around: <span id="amount">{{selectedHumidity}}</span> %
+        <div class="slider">
+          <input *ngFor="let hum of humidity" type="range" id="range" [min]="hum.low" [max]="hum.high" step="5" [(ngModel)]="selectedHumidity" (ngModelChange)="humiditySlider($event)">
+        </div>
+      </label>
+      <div class="ui pointing red basic label" [class.showError]="isHumidityValue">
+        Select a humidity level
+      </div>
+    </div>
+    <div>
+      <button class="ui huge button" (click)="validateForm()" id="submit-data-button">Submit</button>
+    </div>
+  </div>
+</div>
+
+
+
+      <button class="ui huge button" (click)="validateForm()" id="submit-data-button">Submit</button>

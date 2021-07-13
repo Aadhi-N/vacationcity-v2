@@ -1,23 +1,23 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { DataService } from "../data.service";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { DataService } from "../../services/data/data.service";
 import { NgForm } from "@angular/forms";
 
 declare var $: any;
 
-import { Month } from "../month";
-import { MonthService } from "../month.service";
+import { Month } from "../../services/month/month";
+import { MonthService } from "../../services/month/month.service";
 
-import { City } from "../city";
-import { CityService } from "../city.service";
+import { City } from "../../services/city/city";
+import { CityService } from "../../services/city/city.service";
 
-import { CityCoord } from "../cityCoord";
-import { CityCoordService } from "../city-coord.service";
+import { CityCoord } from "../../services/city-coord/cityCoord";
+import { CityCoordService } from "../../services/city-coord/city-coord.service";
 
-import { Temp } from "../temp";
-import { TempService } from "../temp.service";
+import { Temp } from "../../services/temp/temp";
+import { TempService } from "../../services/temp/temp.service";
 
-import { Humidity } from "../humidity";
-import { HumidityService } from "../humidity.service";
+import { Humidity } from "../../services/humidity/humidity";
+import { HumidityService } from "../../services/humidity/humidity.service";
 
 
 @Component({
@@ -27,6 +27,7 @@ import { HumidityService } from "../humidity.service";
 })
 export class InputFormComponent implements OnInit {
   @Input() formHidden: boolean;
+  @Output() onButtonClick = new EventEmitter<string>();
 
   childComponentHidden: boolean = true;
 
@@ -82,6 +83,11 @@ export class InputFormComponent implements OnInit {
       searchQuery => (this.displaySearchQuery = searchQuery)
     );
   }
+
+  /* Emit event to parent to display search results component */
+  public handleClick(value: string) {
+    this.onButtonClick.emit(value);
+  };
 
   //DISPLAYS LIST OF MONTHS FROM DATA SOURCE
 

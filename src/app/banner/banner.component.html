@@ -1,6 +1,4 @@
-
-
-<div class="row">
+<div class="row banner-component">
   <div class="sixteen wide column" id="banner">
     <div class="two wide column">
       <div class="row" id="title-row">
@@ -16,12 +14,11 @@
     </div>
     <div class="row" id="start-button-row">
       <div class="two wide column">
-        <div class="ui huge button" id="start-button" (click)="getStarted()">Get Started <i class="down angle icon" id="down-arrow"></i></div>
+        <div class="ui huge button" id="start-button" (click)="handleClick('loadForm'); navigateTo('input-form')">Get Started <i class="down angle icon" id="down-arrow"></i></div>
         <span class="dot"></span>
       </div>
     </div>
   </div>
-    <app-input-form [formHidden]="childComponentHidden"></app-input-form>
 </div>
 
 

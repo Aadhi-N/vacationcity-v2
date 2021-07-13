@@ -1,10 +1,7 @@
-
 <div>
-  <app-banner></app-banner>
-<!-- <router-outlet>
-
-</router-outlet> -->
-<!-- <app-footer></app-footer> -->
-<!-- <app-messages></app-messages> -->
+  <app-banner (onButtonClick)=loadComponent($event) (Navigate)=navigateTo($event)></app-banner>
+  <app-input-form (onButtonClick)=loadComponent($event) *ngIf='loadForm'></app-input-form>
+  <app-search-results *ngIf='loadForm && loadResults'></app-search-results>
+  <app-footer></app-footer>
 </div> 
 

@@ -1,36 +1,37 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { MessageService } from "./message.service";
+import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
-import { Month } from "./month";
+import { Humidity } from "./humidity";
 
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment";
+
+
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class MonthService {
-  // private monthsUrl = "api/months";
-  // private monthsUrl = "https://vacationcity.herokuapp.com/api/months";
-  private monthsUrl = `${environment.apiUrl}/months`;
+export class HumidityService {
+  // private humidityUrl = "api/humidity";
+  // private humidityUrl = "http://localhost:8000/api/humidity";
+  private humidityUrl = `${environment.apiUrl}/humidity`;
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService) { }
 
   private log(message: string) {
-    this.messageService.add(`MonthService: ${message}`);
+    this.messageService.add(`HumidityService: ${message}`);
   }
 
-  getMonths(): Observable<Month[]> {
+  getHumidity(): Observable<Humidity[]> {
     return this.http
-      .get<Month[]>(this.monthsUrl)
+      .get<Humidity[]>(this.humidityUrl)
       .pipe(
-        tap(months => this.log("fetched months")),
-        catchError(this.handleError("getMonths", []))
+        tap(humidity => this.log("fetched humidity")),
+        catchError(this.handleError("getHumidity", []))
       );
   }
 

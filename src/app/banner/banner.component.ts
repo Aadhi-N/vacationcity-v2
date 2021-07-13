@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-banner',
@@ -6,17 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
-  childComponentHidden: boolean = true;
+  @Output() onButtonClick = new EventEmitter<string>(); 
+  @Output() Navigate = new EventEmitter<string>();
 
   constructor() { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
-  getStarted () {
-    this.childComponentHidden = false;
-  }
- 
- 
-}
+  public handleClick(value: string) {
+    this.onButtonClick.emit(value);
+  };
+
+  public navigateTo(element: string) {
+    this.Navigate.emit(element)
+  };
+
+};

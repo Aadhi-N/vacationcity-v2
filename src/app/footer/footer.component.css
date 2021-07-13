@@ -1,4 +1,9 @@
-#footer-container {
-	background-color: black;
+.footer {
+	background-color: #383354;
 	padding: 50px;
+	text-align: center;
+}
+
+.footer-source {
+	color: white;
 }
