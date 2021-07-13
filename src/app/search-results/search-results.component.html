@@ -1,0 +1,148 @@
+<div [class.searchComponent]="resultsHidden">
+  <div class="row" id="search-results">
+    <!-- ROW START -->
+    <div class="ui huge header" id="search-message-title">Destinations that suit my weather preference:</div>
+    <div class="ui stackable two column grid" id="shared-two-column">
+      <!-- STACKABLE COLUMN START -->
+      <div class="ui segment column" id="tile-column">
+        <!--UI SEGMENT COLUMN 1 START -->
+        <div class="ui header" id="search-message-result" *ngFor="let q of displaySearchQuery">
+          <ng-container *ngIf="q.metricQuery === 'Celcius' && fahrenheitActive; then fahrenheitConvertedValues"></ng-container>
+
+          <ng-container *ngIf="q.metricQuery === 'Fahrenheit' && celciusActive; then celciusConvertedValues; "></ng-container>
+
+          <ng-container *ngIf="q.metricQuery === 'Fahrenheit' && fahrenheitActive; then defaultValues; "></ng-container>
+
+          <ng-container *ngIf="q.metricQuery === 'Celcius' && celciusActive; then defaultValues; "></ng-container>
+
+          <ng-template #fahrenheitConvertedValues> 
+           <div class="value" >
+              Cities with "<em>{{(q.tempQuery * 9) / 5 + 32 | number: '1.0-0'}} degrees {{metric}}</em>" with "<em>{{q.humidityQuery}}%</em>" humidity in the month of "<em>{{q.monthQuery}}</em>":
+            </div>
+          </ng-template>
+          <ng-template #celciusConvertedValues>
+            <div class="value" > 
+              Cities with "<em>{{(q.tempQuery - 32) * 5 / 9 | number: '1.0-0'}} degrees {{metric}}</em>" with "<em>{{q.humidityQuery}}%</em>" humidity in the month of "<em>{{q.monthQuery}}</em>":
+            </div>
+          </ng-template>
+
+          <ng-template #defaultValues>
+            <div class="value" > 
+              Cities with "<em>{{q.tempQuery}} degrees {{metric}}</em>" with "<em>{{q.humidityQuery}}%</em>" humidity in the month of "<em>{{q.monthQuery}}</em>":
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="field" (click)="changeMetric($event);">
+          <div class="toggle label">Celcius</div>
+          <div class="ui toggle checkbox">
+            <input name="public" type="checkbox">
+            <label>Fahrenheit</label>
+          </div>
+        </div>
+
+
+        <div [class.noResultMessage]="isResultsAvailable"><h1 id="no-results-message">No city results available for the selection you provided.</h1></div>
+        <!----------------------------- tile grid  -------------------------->
+        <div class="ui four cards">
+          <!-- FOUR CARDS START -->
+          <div class="ui special cards" id="special-cards" (mouseover)="specialCards()" *ngFor="let result of displaySearchResults | paginate: { itemsPerPage: 4, currentPage: p }">
+
+            <!--UI SPECIAL CARDS START -->
+            <div class="card" id="single-tiles">
+              <!-- SINGLE TILE START -->
+              <div class="blurring dimmable image">
+                <!-- DIMMABLE IMAGE START -->
+                <div class="ui inverted dimmer">
+                  <div class="ui button" value="result.coordinates" (click)="locateOnMaps(result.coordinates)">Locate on map</div>
+                </div>
+                <img src="/assets/tileimg.png">
+                <div class="ui huge label" id="city-label">{{result.name}}</div>
+              </div>
+
+              
+              <!-- DIMMABLE IMAGE END -->
+              <!----------------------------- tile content  -------------------------->
+              <div class="content">
+                <!-- TILE CONTENT START -->
+                <div class="header">Avg. Temperature: </div>
+
+                <div class="row" id="statistic-row">
+                  <!-- TILE STATISTICS START-->
+                  <div class="ui horizontal statistic">
+                    <ng-container *ngIf="celciusActive; then celciusValues; else fahrenheitValues"></ng-container>
+
+                    <ng-template #celciusValues> 
+                      <div class="value" >
+                      {{(result.avgFahrenheit - 32) * 5 / 9 | number: '1.0-0'}}°
+                      </div>
+                    </ng-template>
+
+                    <ng-template #fahrenheitValues>
+                      <div class="value" >
+                        {{result.avgFahrenheit}}°
+                      </div>
+                    </ng-template>
+                    <div class="label">
+                      {{metric}}
+                    </div>
+                  </div>
+                </div>
+                <!-- TILE STATISTIC END -->
+                <div class="row" id="statistic-row">
+                  <!-- TILE STATISTICS START-->
+                  <div class="ui horizontal statistic">
+                    <div class="value">
+                      {{result.avgHumidity}}%
+                    </div>
+                    <div class="label">
+                      Humidity
+                    </div>
+                  </div>
+                </div>
+                <!-- TILE STATISTIC END -->
+              </div>
+              <!-- TILE CONTENT END -->
+              <div class="meta" id="meta-source">
+                <!-- TILE META COUNTRY START -->
+                <a href="https://www.timeanddate.com/">Source: © Time and Date AS </a>
+              </div>
+              <!-- TILE META COUNTRY END -->
+              <!----------------------------- tile content  -------------------------->
+            </div>
+            <!-- SINGLE TILE END -->
+          </div>
+          <!--UI SPECIAL CARDS END -->
+        </div>
+        <!-- FOUR CARDS END -->
+        <!----------------------------- tile grid  -------------------------->
+        <!----------------------------- pagination  -------------------------->
+        <div class="row" [class.showPagination]="!isResultsAvailable" id="pagination-row">
+          
+          <span class="ui pagination menu" id="ngx-pagination"><pagination-controls (pageChange)="p = $event" ></pagination-controls></span>
+        </div>
+        <!-- PAGINATION END -->
+        <!----------------------------- pagination  -------------------------->
+        <!----------------------------- filter button  -------------------------->
+        <div class="row" id="filter-again-button-row">
+          <div class="ui huge button" id="filter-again-button" (click)="clearSearch()">Filter again</div>
+        </div>
+        <!-- FILTER AGAIN BUTTON -->
+        <!----------------------------- filter button  -------------------------->
+      </div>
+      <!--UI SEGMENT COLUMN 1 END -->
+      <!----------------------------- map column  -------------------------->
+      <!-- UI SEGMENT COLUMN 2 START -->
+      <div class="column">
+        <div class="ui segment column" id="map-column">
+          <div class="container" id="map-container">
+            <app-map></app-map>
+          </div>
+        </div>
+      </div>
+        <!-- UI SEGMENT COLUMN 2 END -->
+        <!----------------------------- map column  -------------------------->
+    </div>
+    <!-- STACKABLE COLUMN END -->
+  </div><!-- ROW END -->
+</div><!-- COMPONENT END -->

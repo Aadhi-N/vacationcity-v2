@@ -1,0 +1,15 @@
+<div *ngIf="!loadMap; else mapBlock"><h1 id="no-results-message"> No city results available for the selection you provided.</h1></div>
+
+<ng-template #mapBlock>
+  <agm-map [zoom]="focusZoom" [minZoom]="2.1" [latitude]="centerLat" [longitude]="centerLng">
+    <agm-marker *ngFor="let result of displaySearchResults" [latitude]="result.coordinates.latitude" [longitude]="result.coordinates.longitude" (markerClick)="clickedMarker(infoWindow); changeZoom(result.coordinates)">
+      <agm-info-window #infoWindow>
+        <div class="info-window">
+          <h2 id="info-window-header">{{result.name}} </h2>
+          <div class="meta" id="icon"><a href="https://www.google.com/search?q=visiting+{{result.name}}" target="_blank"><img id="link-icon" src="assets/linkicon.png" alt="external link icon"></a></div>
+          <div class="meta" id="learn-message"><a href="https://www.google.com/search?q=visiting+{{result.name}}" target="_blank">Learn more about {{result.name}}</a></div>
+      </div></agm-info-window>
+    </agm-marker>
+  </agm-map>
+</ng-template>
+

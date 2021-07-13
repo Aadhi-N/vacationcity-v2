@@ -1,0 +1,32 @@
+agm-map {
+  height: 800px;
+}
+
+#no-results-message {
+	text-align: center;
+	margin: 11em 1em 11em 1em;
+	font-style: italic;
+}
+
+.info-window {
+	padding-bottom: 10px;
+}
+
+#info-window-header {
+	border-bottom: 2px solid #000;
+	text-align: center;
+}
+
+#icon {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+#link-icon {
+	width: 20px;
+	height: 20px;
+}
+
+#learn-message {
+	display: inline-block;
+}
