@@ -14,26 +14,21 @@ import { DataService } from "../services/data/data.service";
 export class AppComponent {  
   loadForm: boolean = false;
   loadResults: boolean = false;
-  yes: boolean = false;
 
   constructor(private data: DataService, private scroller: ViewportScroller, private router: Router) { }
 
   ngOnInit() {}
 
   public loadComponent(value: string) {
-    this[value] = !this[value];
+    this[value] = true;
   };
 
   public navigateTo(element: string) {
-    // this.router.navigate([], { fragment: element });
-    this.yes = true;
-      document.getElementById(element).scrollIntoView({
-        behavior: "smooth",
-      });
-      
-    
-    // this.scroller.scrollToAnchor(element);
+    document.getElementById(element).scrollIntoView({
+      behavior: 'smooth' 
+    });
   }
+
   
 
 }

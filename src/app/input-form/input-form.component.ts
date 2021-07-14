@@ -28,6 +28,8 @@ import { HumidityService } from "../../services/humidity/humidity.service";
 export class InputFormComponent implements OnInit {
   @Input() formHidden: boolean;
   @Output() onButtonClick = new EventEmitter<string>();
+  @Output() Navigate = new EventEmitter<string>();
+
 
   childComponentHidden: boolean = true;
 
@@ -82,7 +84,12 @@ export class InputFormComponent implements OnInit {
     this.data.searchQueryMessage.subscribe(
       searchQuery => (this.displaySearchQuery = searchQuery)
     );
-  }
+  };
+
+  /* Emit event to parent to toggle smooth scroll */
+  public navigateTo(element: string) {
+    this.Navigate.emit(element)
+  };
 
   /* Emit event to parent to display search results component */
   public handleClick(value: string) {

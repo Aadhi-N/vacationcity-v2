@@ -1,4 +1,4 @@
-<div id="test">
+
 <div class="row input-form-component" id="input-form">
   <div class="row" id="select-month-row">
     I want to travel in
@@ -38,7 +38,6 @@
     </div>
   </div>
   <div>
-    <button class="ui huge button" (click)="handleClick('loadResults')" id="submit-data-button">Submit</button>
+    <button class="ui huge button" (click)="validateForm(); handleClick('loadResults'); navigateTo('results-element')" id="submit-data-button">Submit</button>
   </div>
-</div>
 </div>

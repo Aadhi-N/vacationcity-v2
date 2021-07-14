@@ -53,3 +53,6 @@ weather_data_oct16.dump
 
 #dev pgkeys
 pgkeys_dev.js
+
+#dev env variables
+environments/environment.ts

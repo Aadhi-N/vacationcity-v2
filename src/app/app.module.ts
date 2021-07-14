@@ -24,8 +24,6 @@ import { LAZY_MAPS_API_CONFIG, LazyMapsAPILoaderConfigLiteral } from '@agm/core/
 
 import { environment } from "../environments/environment";
 
-console.log('CHECKING ENVIRONMENT API KEY', environment.google_maps_key)
-
 @Injectable()
    export class GoogleMapsConfig implements LazyMapsAPILoaderConfigLiteral {
     apiKey: string = environment.google_maps_key;
@@ -54,7 +52,7 @@ console.log('CHECKING ENVIRONMENT API KEY', environment.google_maps_key)
     NgxPaginationModule
   ],
   providers: [
-    // {provide: LAZY_MAPS_API_CONFIG, useClass: GoogleMapsConfig}
+    {provide: LAZY_MAPS_API_CONFIG, useClass: GoogleMapsConfig}
   ],
   bootstrap: [AppComponent]
 })

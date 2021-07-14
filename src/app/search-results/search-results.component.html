@@ -125,7 +125,7 @@
       <!----------------------------- pagination  -------------------------->
       <!----------------------------- filter button  -------------------------->
       <div class="row" id="filter-again-button-row">
-        <div class="ui huge button" id="filter-again-button" (click)="clearSearch()">Filter again</div>
+        <div class="ui huge button" id="filter-again-button" (click)="clearSearch(); navigateTo('form-element')" >Filter again</div>
       </div>
       <!-- FILTER AGAIN BUTTON -->
       <!----------------------------- filter button  -------------------------->
@@ -145,4 +145,6 @@
   </div>
   <!-- STACKABLE COLUMN END -->
 </div><!-- ROW END -->
+<app-footer></app-footer>
+
 

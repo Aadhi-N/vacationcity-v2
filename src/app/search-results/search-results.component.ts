@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { DataService } from "../../services/data/data.service";
 declare var $: any;
 
@@ -10,6 +10,8 @@ declare var $: any;
 export class SearchResultsComponent implements OnInit {
   /* FROM PARENT - HIDE COMPONENT UNTIL SUBMIT BUTTON CLICKED */
   @Input() resultsHidden: boolean;
+  @Output() Navigate = new EventEmitter<string>();
+
 
   p: number = 1;
   displaySearchResults: any;
@@ -47,7 +49,11 @@ export class SearchResultsComponent implements OnInit {
     this.data.searchCityCoordsMessage.subscribe(
       searchCityCoords => {(this.displaySelectedCityCoords = searchCityCoords)}
     );
-  }
+  };
+
+  public navigateTo(element: string) {
+    this.Navigate.emit(element)
+  };
 
   validateResults() {
     if (

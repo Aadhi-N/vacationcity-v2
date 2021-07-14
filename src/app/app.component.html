@@ -1,7 +1,12 @@
 <div>
-  <app-banner (onButtonClick)=loadComponent($event) (Navigate)=navigateTo($event)></app-banner>
-  <app-input-form (onButtonClick)=loadComponent($event) *ngIf='loadForm'></app-input-form>
-  <app-search-results *ngIf='loadForm && loadResults'></app-search-results>
-  <app-footer></app-footer>
+  <div id="banner-element">
+    <app-banner (onButtonClick)=loadComponent($event) (Navigate)=navigateTo($event)></app-banner>
+  </div>
+  <div id="form-element">
+    <app-input-form (onButtonClick)=loadComponent($event) (Navigate)=navigateTo($event) *ngIf='loadForm'></app-input-form>
+  </div>
+  <div id="results-element">
+    <app-search-results (Navigate)=navigateTo($event) *ngIf='loadForm && loadResults'></app-search-results>
+  </div>
 </div> 
 
