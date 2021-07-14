@@ -23,6 +23,9 @@ import { LAZY_MAPS_API_CONFIG, LazyMapsAPILoaderConfigLiteral } from '@agm/core/
 // import { apikey } from './apikey';
 
 import { environment } from "../environments/environment";
+import { MonthsComponent } from './input-form/components/months/months.component';
+import { TemperaturesComponent } from './input-form/components/temperatures/temperatures.component';
+import { HumidityComponent } from './input-form/components/humidity/humidity.component';
 
 @Injectable()
    export class GoogleMapsConfig implements LazyMapsAPILoaderConfigLiteral {
@@ -39,6 +42,9 @@ import { environment } from "../environments/environment";
     SearchResultsComponent,
     FooterComponent,
     MapComponent,
+    MonthsComponent,
+    TemperaturesComponent,
+    HumidityComponent,
   ],
   imports: [
     BrowserModule,

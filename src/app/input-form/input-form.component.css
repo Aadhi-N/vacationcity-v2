@@ -7,65 +7,14 @@
   padding-top: 50px;
 }
 
-#select-month-row {
-  margin-top: 70px;
-}
-
-#select-month {
-  font-weight: bold;
-  margin-right: 20px;
-}
-
-#select-temp {
-  margin: 70px;
-}
-
-#select-humidity {
-  margin: 70px;
-}
-
-#select-month {
-  background: none;
-  border: none;
-  border-bottom: 1px solid #000;
-  padding-bottom: 5px;
-}
-
 #amount {
   border-bottom: 1px solid #000;
   padding-bottom: 5px;
   font-weight: bold;
 }
 
-#tempBlock {
-  border-bottom: 1px solid #000;
-  padding-bottom: 5px;
-  font-weight: bold;
-}
-
-.fahrenheit {
-  color: blue;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.celcius {
-  color: blue;
-  cursor: pointer;
-  font-weight: bold;
-}
-/*
-.showCelcius {
-  display: none;
-}
-
-.showFarenheit {
-  display: none;
-}
-*/
-#humidity-text {
-  border-bottom: 3px dotted #135823;
-  padding-bottom: 5px;
+.slider {
+  margin: 50px 0px 20px 0px;
 }
 
 #submit-data-button {
@@ -92,9 +41,7 @@
   background: none #eaeaea!important;
 }
 
-.slider {
-  margin: 50px 0px 20px 0px;
-}
+
 
 
 

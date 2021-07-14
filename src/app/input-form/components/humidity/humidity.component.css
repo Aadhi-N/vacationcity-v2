@@ -1,0 +1,9 @@
+#select-humidity {
+    margin: 70px;
+}
+
+#humidity-text {
+    border-bottom: 3px dotted #135823;
+    padding-bottom: 5px;
+}
+  

@@ -1,0 +1,15 @@
+<div class="row" id="select-temp">
+  <label>The temperature should be around: <span id="amount" *ngIf="selectedTemp === null; else tempBlock">0</span> °
+    <ng-template #tempBlock><span id="tempBlock">{{selectedTemp}}</span></ng-template>
+    <span [class.celcius]="!celciusActive" id="celcius" (click)="setToCelcius($event)">Celcius</span> |
+    <span [class.fahrenheit]="!fahrenheitActive" (click)="setToFahrenheit($event)">Fahrenheit</span>
+    <br />
+    <div class="slider">
+      <input type="range" id="range" [min]="tempRange.low" [max]="tempRange.high" [value]="tempRange.mid" step="2" [(ngModel)]="selectedTemp" (ngModelChange)="tempSlider($event)">
+    </div>
+    <!-- Validation for temperature -->
+    <div class="ui pointing red basic label" [class.showError]="isTempValue" id="error-label">
+      Select a temperature
+    </div>
+  </label>
+</div>

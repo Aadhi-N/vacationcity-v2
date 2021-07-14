@@ -1,0 +1,21 @@
+#select-temp {
+    margin: 70px;
+}
+
+#tempBlock {
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+  
+.fahrenheit {
+    color: blue;
+    cursor: pointer;
+    font-weight: bold;
+}
+  
+.celcius {
+    color: blue;
+    cursor: pointer;
+    font-weight: bold;
+}

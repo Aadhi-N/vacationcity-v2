@@ -1,0 +1,11 @@
+<div class="row" id="select-month-row">
+  I want to travel in
+  <select name="Month" id="select-month" (click)="onMonthClick($event)">
+    <option disabled>Month</option>
+    <option *ngFor="let month of months" [value]="month.monthID">{{month.monthName}}</option>
+  </select>
+  <!-- Validation for month -->
+  <div class="ui left pointing red basic label" [class.showError]="isMonthValue">
+    Select a month
+  </div>
+</div>

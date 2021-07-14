@@ -1,0 +1,12 @@
+#select-month-row {
+    margin-top: 70px;
+}
+
+#select-month {
+    font-weight: bold;
+    margin-right: 20px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+}

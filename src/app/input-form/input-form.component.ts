@@ -4,6 +4,7 @@ import { NgForm } from "@angular/forms";
 
 declare var $: any;
 
+/* Import models and services */
 import { Month } from "../../services/month/month";
 import { MonthService } from "../../services/month/month.service";
 
@@ -26,12 +27,10 @@ import { HumidityService } from "../../services/humidity/humidity.service";
   styleUrls: ["./input-form.component.css"]
 })
 export class InputFormComponent implements OnInit {
-  @Input() formHidden: boolean;
+  /* Send to parent - load component on click and smooth scroll */
   @Output() onButtonClick = new EventEmitter<string>();
   @Output() Navigate = new EventEmitter<string>();
 
-
-  childComponentHidden: boolean = true;
 
   months: Month[];
   cities: City[];
@@ -62,19 +61,19 @@ export class InputFormComponent implements OnInit {
   displaySearchQuery: any;
 
   constructor(
-    private monthService: MonthService,
+    // private monthService: MonthService,
     private cityService: CityService,
-    private tempService: TempService,
-    private humidityService: HumidityService,
+    // private tempService: TempService,
+    // private humidityService: HumidityService,
     private data: DataService
   ) {}
 
   ngOnInit() {
-    this.getMonths();
+    // this.getMonths();
     this.getCities();
-    this.getTemps();
-    this.getHumidity();
-  }
+    // this.getTemps();
+    // this.getHumidity();
+  };
 
   ngAfterViewInit() {
     this.data.searchResultMessage.subscribe(
@@ -95,12 +94,6 @@ export class InputFormComponent implements OnInit {
   public handleClick(value: string) {
     this.onButtonClick.emit(value);
   };
-
-  //DISPLAYS LIST OF MONTHS FROM DATA SOURCE
-
-  getMonths(): void {
-    this.monthService.getMonths().subscribe(months => {(this.months = months['results'])});
-  }
 
   getCities(): void {
     this.cityService.getCities().subscribe(cities => {
@@ -125,28 +118,13 @@ export class InputFormComponent implements OnInit {
     });
   }
 
-  getTemps(): void {
-    this.tempService.getTemps().subscribe(temps => {
-      this.temps = temps;
-    });
-  }
-
-  getHumidity(): void {
-    this.humidityService.getHumidity().subscribe(humidity => {
-      this.humidity = humidity['results'];
-    });
-  }
-
   onMonthClick(event): void {
     this.selectedMonth = event.target.value;
     this.selectedMonthName = this.months[event.target.value - 1].monthName;
     this.isMonthValue = true;
   }
 
-  tempSlider(event) {
-    this.selectedTemp = event;
-    this.isTempValue = true;
-  }
+
 
   setToCelcius(event) {
     this.celciusActive = true;
@@ -179,10 +157,10 @@ export class InputFormComponent implements OnInit {
     }
   }
 
-  humiditySlider(event): void {
-    this.selectedHumidity = event;
-    this.isHumidityValue = true;
-  }
+  // humiditySlider(event): void {
+  //   this.selectedHumidity = event;
+  //   this.isHumidityValue = true;
+  // }
 
   displaySearchParams() {
     /* sending search query params to other components */
@@ -201,7 +179,6 @@ export class InputFormComponent implements OnInit {
 
   validateForm() {
     /* ternary condition that evaluates if filter options are selected; triggers error message if unselected */
-    // this.validateMetric()
     void (this.selectedMonth === null && (this.isMonthValue = false));
     void (this.selectedTemp === null && (this.isTempValue = false));
     void (this.selectedHumidity === null && (this.isHumidityValue = false));
@@ -267,10 +244,6 @@ export class InputFormComponent implements OnInit {
 
     this.displaySearchParams();
     this.displayResults(this.displaySearchResults);
-    this.submitForResults();
   }
 
-  submitForResults() {
-    this.childComponentHidden = false;
-  }
-}
+};

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError, map, tap } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { catchError, tap } from "rxjs/operators";
 
 import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
@@ -8,14 +8,10 @@ import { Humidity } from "./humidity";
 
 import { environment } from "../../environments/environment";
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class HumidityService {
-  // private humidityUrl = "api/humidity";
-  // private humidityUrl = "http://localhost:8000/api/humidity";
   private humidityUrl = `${environment.apiUrl}/humidity`;
 
   constructor(
@@ -37,14 +33,9 @@ export class HumidityService {
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
+      console.error(error); 
       this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
-}
+};

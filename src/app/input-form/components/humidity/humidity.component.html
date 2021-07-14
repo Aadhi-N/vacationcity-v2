@@ -1,0 +1,11 @@
+<div class="row" id="select-humidity">
+  <label>The <span id="humidity-text" data-tooltip="Humidity is the amount of water vapour in the air. The higher the relative humidity, the hotter you will feel." data-position="top center">humidity</span> should be around: <span id="amount">{{selectedHumidity}}</span> %
+    <div class="slider">
+      <input *ngFor="let hum of humidity" type="range" id="range" [min]="hum.low" [max]="hum.high" step="5" >
+    </div>
+  </label>
+  <!-- Validation for humidity-->
+  <div class="ui pointing red basic label" [class.showError]="isHumidityValue">
+    Select a humidity level
+  </div>
+</div>
