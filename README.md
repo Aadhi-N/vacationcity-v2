@@ -1,8 +1,9 @@
+![Image of Vacation City Banner](./readmeBanner.png)
 <h1 align="center">
   Vacation City
 </h1>
 
-##  :paw_prints: Overview
+##  :airplane: Overview
 Link to site: [https://vacationcity.herokuapp.com/](https://vacationcity.herokuapp.com/)
 
     This portfolio site was created using:
@@ -10,7 +11,7 @@ Link to site: [https://vacationcity.herokuapp.com/](https://vacationcity.herokua
     - Semantic-UI/Fomantic-UI 
     - Express 
 
-  **Description**
+## Description
 
     Vacation City is an app that allows people to choose their next vacation based on what the weather is at a particular month around the world.
 
@@ -20,7 +21,9 @@ Link to site: [https://vacationcity.herokuapp.com/](https://vacationcity.herokua
 
 ## Note on source code 
 
-The code is currently being refactored, so running the project locally will work but not as expected. Link to original source code at time of deployment: [https://github.com/Aadhi-N/vacationcity](https://github.com/Aadhi-N/vacationcity).
+The code is currently being refactored, so running the project locally will work, but not as expected. 
+
+**Link to original source code at time of deployment: [https://github.com/Aadhi-N/vacationcity](https://github.com/Aadhi-N/vacationcity).**
 
 #### Run project locally:
 
