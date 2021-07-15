@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError, map, tap } from "rxjs/operators";
+import { from } from 'rxjs';
+import { catchError, tap, first } from "rxjs/operators";
+
 
 import { MessageService } from "../message/message.service";
 import { Observable, of } from "rxjs";
@@ -37,29 +39,26 @@ export class CityService {
     this.messageService.add(`CityService: ${message}`);
   }
   
-  getCities(): Observable<any[]>{
+  
+  getCities(): Observable<any[]> {
+    /* GET requests to 3 different apis, forkJoin together to merge city_temp + city_cords to City object */
     let cityData = this.http.get(this.citiesUrl);
     let cityTempData = this.http.get(this.cityTempsUrl);
     let cityCoordData = this.http.get(this.cityCoordsUrl);
       return forkJoin([cityData, cityTempData, cityCoordData])
       .pipe(
-          tap(cities => this.log("fetched cities")),
-          catchError(this.handleError("getCities", []))
+          tap(cities => {this.log("fetched cities"), console.log('SERVICE', cities)}),
+          catchError(this.handleError("getCities", [])     
+          )
       );
-  }
+  };
 
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
-
-}
+};

@@ -1,15 +1,18 @@
-<div class="row" id="select-temp">
+<div class="row" id="select-temp" [formGroup]="parent">
   <label>The temperature should be around: <span id="amount" *ngIf="selectedTemp === null; else tempBlock">0</span> °
+    <!-- Celcius to Farenheit converter -->
     <ng-template #tempBlock><span id="tempBlock">{{selectedTemp}}</span></ng-template>
-    <span [class.celcius]="!celciusActive" id="celcius" (click)="setToCelcius($event)">Celcius</span> |
-    <span [class.fahrenheit]="!fahrenheitActive" (click)="setToFahrenheit($event)">Fahrenheit</span>
+    <span [class.celcius]="!metric.celciusActive" id="celcius" (click)="setMetric('celciusActive')">Celcius</span> |
+    <span [class.fahrenheit]="!metric.fahrenheitActive" (click)="setMetric('fahrenheitActive')">Fahrenheit</span>
     <br />
+
+    <!-- Temperature selection slider -->
     <div class="slider">
-      <input type="range" id="range" [min]="tempRange.low" [max]="tempRange.high" [value]="tempRange.mid" step="2" [(ngModel)]="selectedTemp" (ngModelChange)="tempSlider($event)">
+      <input type="range" id="range" [min]="tempRange.low" [max]="tempRange.high" [value]="this.selectedTemp" step="2" (ngModelChange)="tempSlider($event)" formControlName="selectedTemp">
     </div>
-    <!-- Validation for temperature -->
-    <div class="ui pointing red basic label" [class.showError]="isTempValue" id="error-label">
-      Select a temperature
+    <!-- Validation for temperature. Method to check submission + formFields from parent. -->
+    <div *ngIf="this.submitted && this.formFields.selectedTemp.errors" class="ui pointing red basic label">
+      <div *ngIf="this.formFields.selectedTemp.errors.required">Select a temperature</div>
     </div>
   </label>
 </div>

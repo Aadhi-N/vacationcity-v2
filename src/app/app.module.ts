@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injectable } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+// import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -49,6 +50,7 @@ import { HumidityComponent } from './input-form/components/humidity/humidity.com
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     // HttpClientInMemoryWebApiModule.forRoot(

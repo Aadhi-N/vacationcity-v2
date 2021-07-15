@@ -1,4 +1,6 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
 import { Humidity } from "../../../../services/humidity/humidity";
 import { HumidityService } from "../../../../services/humidity/humidity.service";
 
@@ -9,10 +11,12 @@ import { HumidityService } from "../../../../services/humidity/humidity.service"
   styleUrls: ['./humidity.component.css', '../../input-form.component.css']
 })
 export class HumidityComponent implements OnInit {
+  @Input() parent: FormGroup;
+  @Input() submitted: boolean;
+  @Input() formFields: (args: any) => void;
 
   humidity: Humidity[];
-  selectedHumidity: number = null;
-  isHumidityValue: boolean = false;
+  humidityVal: number = 50;
 
   constructor(
     private humidityService: HumidityService
@@ -29,8 +33,7 @@ export class HumidityComponent implements OnInit {
  
   /* Interactive slider */
   humiditySlider(event): void {
-    this.selectedHumidity = event;
-    // this.isHumidityValue = true;
-  }
+    this.humidityVal = event;
+  };
 
 }

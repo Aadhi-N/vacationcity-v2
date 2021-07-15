@@ -1,11 +1,11 @@
-<div class="row" id="select-month-row">
+<div class="row" id="select-month-row" [formGroup]="parent">
   I want to travel in
-  <select name="Month" id="select-month" (click)="onMonthClick($event)">
-    <option disabled>Month</option>
+  <select name="Month" id="select-month" formControlName="selectedMonthID" placeholder="fhf">
+    <option disabled selected="selected">Month</option>
     <option *ngFor="let month of months" [value]="month.monthID">{{month.monthName}}</option>
   </select>
-  <!-- Validation for month -->
-  <div class="ui left pointing red basic label" [class.showError]="isMonthValue">
-    Select a month
+  <!-- Validation for month. Method to check submission + formFields from parent. -->
+  <div *ngIf="this.submitted && this.formFields.selectedMonthID.errors" class="ui left pointing red basic label">
+    <div *ngIf="this.formFields.selectedMonthID.errors.required">Select a month</div>
   </div>
 </div>

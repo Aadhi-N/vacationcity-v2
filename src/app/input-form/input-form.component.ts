@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { DataService } from "../../services/data/data.service";
-import { NgForm } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var $: any;
 
 /* Import models and services */
 import { Month } from "../../services/month/month";
-import { MonthService } from "../../services/month/month.service";
 
 import { City } from "../../services/city/city";
 import { CityService } from "../../services/city/city.service";
@@ -15,10 +14,8 @@ import { CityCoord } from "../../services/city-coord/cityCoord";
 import { CityCoordService } from "../../services/city-coord/city-coord.service";
 
 import { Temp } from "../../services/temp/temp";
-import { TempService } from "../../services/temp/temp.service";
 
 import { Humidity } from "../../services/humidity/humidity";
-import { HumidityService } from "../../services/humidity/humidity.service";
 
 
 @Component({
@@ -31,14 +28,15 @@ export class InputFormComponent implements OnInit {
   @Output() onButtonClick = new EventEmitter<string>();
   @Output() Navigate = new EventEmitter<string>();
 
+  registerForm: FormGroup;
+  registerInputForm: FormGroup;
+  submitted = false;
+
 
   months: Month[];
   cities: City[];
   temps: Temp[];
-  tempRange: any = {
-    high: 50,
-    low: -50,
-    mid: 0}
+
   humidity: Humidity[];
 
   selectedMonth: number = null;
@@ -52,27 +50,26 @@ export class InputFormComponent implements OnInit {
 
   celciusActive: boolean = true;
   fahrenheitActive: boolean = false;
-  isMonthValue: boolean = true;
-  isTempValue: boolean = true;
-  isHumidityValue: boolean = true;
 
   filteredSearchResults: any;
   displaySearchResults: any;
   displaySearchQuery: any;
 
   constructor(
-    // private monthService: MonthService,
     private cityService: CityService,
-    // private tempService: TempService,
-    // private humidityService: HumidityService,
-    private data: DataService
+    private data: DataService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    // this.getMonths();
-    this.getCities();
-    // this.getTemps();
-    // this.getHumidity();
+    this.getCities(); //get list of cities to filter through
+
+    /* Register form validation, pass values to children */
+    this.registerInputForm = this.formBuilder.group({
+      selectedMonthID: ['', Validators.required],
+      selectedTemp: ['', Validators.required],
+      selectedHumidity: ['', Validators.required]
+    })
   };
 
   ngAfterViewInit() {
@@ -85,6 +82,18 @@ export class InputFormComponent implements OnInit {
     );
   };
 
+   /* Convenience method for easy access to form fields */
+   formFields() { return this.registerInputForm.controls; }
+
+   /* Handle form validation */
+   onSubmit() {
+    this.submitted = true;
+    if (this.registerInputForm.invalid) {return} //stop here if form is invalid
+
+    this.getCities();
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerInputForm.value))
+  }
+
   /* Emit event to parent to toggle smooth scroll */
   public navigateTo(element: string) {
     this.Navigate.emit(element)
@@ -95,72 +104,40 @@ export class InputFormComponent implements OnInit {
     this.onButtonClick.emit(value);
   };
 
+  /* Display list of cities from GET request in services; create new array by merging APIs */
   getCities(): void {
-    this.cityService.getCities().subscribe(cities => {
-      for (let city of cities[0].results) {
-        let cityArray = cities[1].results.filter(cityData => {
-          if (city.cityID == cityData.city_id) {
-            return cityData;
-          }
+    this.cityService.getCities().subscribe(cities => { //get list of cities
+      let cityNamesAPI = cities[0]; //https://vacationcity.herokuapp.com/api/cities
+      let cityTempsAPI = cities[1]; //https://vacationcity.herokuapp.com/api/citytemps
+      let cityCoordsAPI = cities[2]; //https://vacationcity.herokuapp.com/api/citycoords
+
+      for (let cityName of cityNamesAPI.results) { 
+        let cityTempArray = cityTempsAPI.results.filter(cityTemp => { 
+        // Match and merge temperatures from city temps API to city API in array format
+        if (cityName.cityID == cityTemp.city_id) {
+              return cityTemp;
+            }
         });
+        cityName.city_temp = cityTempArray;
+        
+        // Match and merge coordinates from city coordinates API to city API in array format
+        let cityCoordArray = cityCoordsAPI.results.filter(cityCoords => {
+          if (cityName.cityID == cityCoords.city_id) {
+              return cityCoords;
+            }
+          });
+        cityName.city_coords = cityCoordArray;
+      };
 
-        city.city_temp = cityArray;
-
-        let coordArray = cities[2].results.filter(coords => {
-          if (city.cityID == coords.city_id){
-            return coords;
-          }
-        });
-
-        city.city_coords = coordArray;
-      }
-      this.cities = cities[0].results;
+    // Set new merged array of APIs to variable
+    this.cities = cities[0].results;
     });
-  }
+  };
 
   onMonthClick(event): void {
     this.selectedMonth = event.target.value;
     this.selectedMonthName = this.months[event.target.value - 1].monthName;
-    this.isMonthValue = true;
   }
-
-
-
-  setToCelcius(event) {
-    this.celciusActive = true;
-    this.fahrenheitActive = false;
-    this.setMetric()
-  }
-
-  setToFahrenheit(event) {
-    this.celciusActive = false;
-    this.fahrenheitActive = true;
-    this.setMetric()
-  }
-
-  setMetric() { 
-    if (this.celciusActive === true) {
-      this.selectedTemp !== 0 ? this.selectedTemp : 0;
-
-      this.tempRange = {
-        high: (this.temps['results'][0].high - 32) * 5 / 9,
-        low: (this.temps['results'][0].low - 32) * 5 / 9,
-        mid: 0
-      }
-    } else {
-      this.selectedTemp !== 32 ? this.selectedTemp : 32;
-      this.tempRange = {
-        high: this.temps['results'][0].high,
-        low: this.temps['results'][0].low,
-        mid: 0
-      };
-    }
-  }
-
-  // humiditySlider(event): void {
-  //   this.selectedHumidity = event;
-  //   this.isHumidityValue = true;
-  // }
 
   displaySearchParams() {
     /* sending search query params to other components */
@@ -177,16 +154,6 @@ export class InputFormComponent implements OnInit {
     ]);
   }
 
-  validateForm() {
-    /* ternary condition that evaluates if filter options are selected; triggers error message if unselected */
-    void (this.selectedMonth === null && (this.isMonthValue = false));
-    void (this.selectedTemp === null && (this.isTempValue = false));
-    void (this.selectedHumidity === null && (this.isHumidityValue = false));
-
-    /* only when all input field are selected, next function is called */
-    void (this.isMonthValue && this.isTempValue && this.isHumidityValue && (this.validateMetric()));
-    
-  }
 
   displayResults(results) {
     this.data.changeSearchResultMessage(results);
@@ -202,33 +169,38 @@ export class InputFormComponent implements OnInit {
     }
   }
 
+  /* Method to filter cities based on user input: selected month, temps, and humidity */
   performQuery(convertedTemp) {
     let filteredCities = [];
     let cityResults = [];
 
+    // iterate over all cities;
+    //cityTemp = get all city temps based on selected month
+    // if avg farenheigt and humidity fall within deviation of +-10
+    // eg. 
     for (let i = 0; i < this.cities.length; i++) {
-      let cityTemp: any = this.cities[i].city_temp[this.selectedMonth - 1];
+      let cityFilteredByMonthAndTemps: any = this.cities[i].city_temp[this.selectedMonth - 1];
 
       if (
         !(
-          Number(cityTemp.avgFahrenheit) < convertedTemp + 10 &&
-          Number(cityTemp.avgFahrenheit) > convertedTemp - 10
+          Number(cityFilteredByMonthAndTemps.avgFahrenheit) < convertedTemp + 10 &&
+          Number(cityFilteredByMonthAndTemps.avgFahrenheit) > convertedTemp - 10
         )
       )
         continue;
 
       if (
         !(
-          Number(cityTemp.avgHumidity) < this.selectedHumidity + 10 &&
-          Number(cityTemp.avgHumidity) > this.selectedHumidity - 10
+          Number(cityFilteredByMonthAndTemps.avgHumidity) < this.selectedHumidity + 10 &&
+          Number(cityFilteredByMonthAndTemps.avgHumidity) > this.selectedHumidity - 10
         )
       )
         continue;
 
-      filteredCities.push(cityTemp);
-    }
+      filteredCities.push(cityFilteredByMonthAndTemps);
+    };
 
-    // PUSH FILTERED RESULTS INTO PROPERTY
+    // Assign filtered results into new property
     for (let filteredCity of filteredCities) {
       cityResults.push({
         name: this.cities[filteredCity.city_id - 1].cityName,

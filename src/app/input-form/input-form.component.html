@@ -1,8 +1,10 @@
 <div class="row input-form-component" id="input-form">
-  <app-months></app-months>
-  <app-temperatures></app-temperatures>
-  <app-humidity></app-humidity>
-  <div>
-    <button class="ui huge button" (click)="validateForm(); handleClick('loadResults'); navigateTo('results-element')" id="submit-data-button">Submit</button>
-  </div>
+  <form [formGroup]="registerInputForm" (ngSubmit)="onSubmit()">
+    <app-months [parent]="registerInputForm" [submitted]="submitted" [formFields]="formFields()"></app-months>
+    <app-temperatures [parent]="registerInputForm" [submitted]="submitted" [formFields]="formFields()"></app-temperatures>
+    <app-humidity [parent]="registerInputForm" [submitted]="submitted" [formFields]="formFields()"></app-humidity>
+    <div>
+      <button class="ui huge button" (click)="handleClick('loadResults'); navigateTo('results-element');" id="submit-data-button">Submit</button>
+    </div>
+  </form>
 </div>

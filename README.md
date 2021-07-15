@@ -1,27 +1,51 @@
-# Vacationcity
+<h1 align="center">
+  Vacation City
+</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+##  :paw_prints: Overview
+Link to site: [https://vacationcity.herokuapp.com/](https://vacationcity.herokuapp.com/)
 
-## Development server
+    This portfolio site was created using:
+    - Angular 
+    - Semantic-UI/Fomantic-UI 
+    - Express 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+  **Description**
 
-## Code scaffolding
+    Vacation City is an app that allows people to choose their next vacation based on what the weather is at a particular month around the world.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    Have you ever had difficulty scheduling your future vacation on a particular calendar month, only to find out the city you want to travel to has unideal weather conditions?
 
-## Build
+    This app helps you narrow down where you'd like to go based on your preferred travel month, temperatures, and humidity!
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Note on source code 
 
-## Running unit tests
+The code is currently being refactored, so running the project locally will work but not as expected. Link to original source code at time of deployment: [https://github.com/Aadhi-N/vacationcity](https://github.com/Aadhi-N/vacationcity).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Run project locally:
 
-## Running end-to-end tests
+Clone the repo to your local machine.
+```
+git clone https://github.com/Aadhi-N/vacationcity-v2
+cd vacationcity-v2
+```
+Install all dependencies (using the `npm install` command).
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Start the Express server
+```
+node server.js
+```
 
-## Further help
+Launch Angular application
+```
+ng serve --open
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+### Dependencies
+
+* Express
+* Fomantic-UI
+* RxJS
+* Typescript
+

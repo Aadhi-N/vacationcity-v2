@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 /* Import models and services */
 import { Month } from "../../../../services/month/month";
@@ -11,7 +12,10 @@ import { MonthService } from "../../../../services/month/month.service";
   styleUrls: ['./months.component.css']
 })
 export class MonthsComponent implements OnInit {
-
+  @Input() parent: FormGroup;
+  @Input() submitted: boolean;
+  @Input() formFields: (args: any) => void;
+ 
   months: Month[];
 
 
