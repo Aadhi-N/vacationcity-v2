@@ -13,15 +13,22 @@ Link to site: [https://vacationcity.herokuapp.com/](https://vacationcity.herokua
 
 ## Description
 
-    Vacation City is an app that allows people to choose their next vacation based on what the weather is at a particular month around the world.
+Vacation City is an app that allows people to choose their next vacation based on what the weather is at a particular month around the world.
 
-    Have you ever had difficulty scheduling your future vacation on a particular calendar month, only to find out the city you want to travel to has unideal weather conditions?
+Have you ever had difficulty scheduling your future vacation on a particular calendar month, only to find out the city you want to travel to has unideal weather conditions?
 
-    This app helps you narrow down where you'd like to go based on your preferred travel month, temperatures, and humidity!
+This app helps you narrow down where you'd like to go based on your preferred travel month, temperatures, and humidity!
 
 ## Note on source code 
 
 The code is currently being refactored, so running the project locally will work, but not as expected. 
+
+Google Maps API key not updated on deployed site, so map won't render.
+
+*Future Plans*
+*-refactor logic code for better performance and readability*
+*-CSS responsiveness for mobile*
+*-unit tests*
 
 **Link to original source code at time of deployment: [https://github.com/Aadhi-N/vacationcity](https://github.com/Aadhi-N/vacationcity).**
 
